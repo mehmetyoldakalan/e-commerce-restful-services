@@ -13,7 +13,7 @@ Proje PHP dilinde Laravel Framework ile geliştirilmiştir. Api gateway olarak s
 ## Kurulum
 
 Terminal:
-- git clone https://github.com/mehmetyoldakalan/cafe_automation.git
+- git clone https://github.com/mehmetyoldakalan/e-commerce-restful-services.git
 - cd project-directory
 - cp .env.example .env
 - .env => QUEUE_CONNECTION=database
