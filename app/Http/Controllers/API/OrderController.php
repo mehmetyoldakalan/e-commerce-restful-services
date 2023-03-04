@@ -42,8 +42,7 @@ class OrderController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'product_id' => 'required|integer',
-                'product_count' => 'required|integer',
+                'products' => 'required|array',
                 'user_id' => 'required|integer'
             ]
         );
@@ -52,21 +51,24 @@ class OrderController extends Controller
             return response()->json(['error' => $validator->errors()]);
         }
 
-        $product = Product::query()->find($request->product_id);
+        foreach ($request->products ?? [] as $productId => $productCount) {
+            $product = Product::query()->find($productId);
 
-        if (!$product || !self::stockControl($product, $request)) {
-            return response()->json(['error' => 'Product not found or out of stock']);
+            if (!$product || !self::stockControl($product, $request)) {
+                return response()->json(['error' => 'Product not found or out of stock']);
+            }
+
+            $request->product_count = $productCount;
+
+            dispatch(
+                new OrderJob(
+                    $request->user_id,
+                    $product->id,
+                    $request->product_count,
+                    self::applyDiscount($product, $request)
+                )
+            );
         }
-
-
-        dispatch(
-            new OrderJob(
-                $request->user_id,
-                $product->id,
-                $request->product_count,
-                self::applyDiscount($product, $request)
-            )
-        );
 
         return response()->json(['success' => true]);
     }
