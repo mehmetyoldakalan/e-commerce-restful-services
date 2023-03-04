@@ -143,12 +143,7 @@ Terminal:
                         </thead>
                         <tbody>
                             <tr>
-                                <td>product_id</td>
-                                <td>Yes</td>
-                                <td>integer</td>
-                            </tr>
-                            <tr>
-                                <td>product_count</td>
+                                <td>products[PRODUCT_ID]:PRODUCT_COUNT</td>
                                 <td>Yes</td>
                                 <td>integer</td>
                             </tr>
@@ -272,7 +267,7 @@ Terminal:
                                 </tr>
                                  <tr>
                                     <td>Token</td>
-                                    <td>No</td>
+                                    <td>Yes</td>
                                     <td>Bearer</td>
                                 </tr>
                             </tbody>
